@@ -1,0 +1,21 @@
+---
+# defaults file for yum-repos
+
+yr_rpm_gpg_path: "/etc/pki/rpm-gpg/"
+yr_confluent_repo_url: "http://packages.confluent.io/rpm/"
+
+__confluent_dist:
+  file: "confluent"
+  name: "confluent.dist"
+  description: "Confluent repository (dist)"
+  baseurl: "{{ yr_confluent_repo_url }}/{{ yr_confluent_repo_version }}/7"
+  gpgcheck: "1"
+  gpgkey: "file://{{ yr_rpm_gpg_path }}/CONFLUENT"
+
+__confluent_platform:
+  file: "confluent"
+  name: "confluent"
+  description: "Confluent repository"
+  baseurl: "{{ yr_confluent_repo_url }}/{{ yr_confluent_repo_version }}"
+  gpgcheck: "1"
+  gpgkey: "file://{{ yr_rpm_gpg_path }}/CONFLUENT"

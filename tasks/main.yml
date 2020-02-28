@@ -1,0 +1,51 @@
+---
+
+- name: Load a variable file based on the OS type
+  include_vars: "{{ lookup('first_found', __possible_files) }}"
+  vars:
+    __possible_files:
+      - "vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+      - "vars/{{ ansible_distribution }}.yml"
+      - "vars/{{ ansible_distribution_file_variety }}.yml"
+
+- name: Install desired repositories
+  yum_repository:
+    name: "{{ __repo.name }}"
+    description: "{{ __repo.description }}"
+    mirrorlist: "{{ __repo.mirrorlist | d(omit) }}"
+    metalink: "{{ __repo.metalink | d(omit) }}"
+    baseurl: "{{ __repo.baseurl | d(omit) }}"
+    gpgcheck: "{{ __repo.gpgcheck | d(omit) }}"
+    gpgkey: "{{ __repo.gpgkey | d(omit) }}"
+    state: present
+  vars:
+    __repo: "{{ lookup('vars','__'+item) }}"
+  loop: "{{ yr_repos }}"
+  loop_control:
+    label: "{{ item }}"
+
+- name: Fetch status of GPG keys
+  stat:
+    path: "{{ __repo.gpgkey | replace('file://','') }}"
+  register: "__gpg_file"
+  vars:
+    __repo: "{{ lookup('vars','__'+item) }}"
+  loop: "{{ yr_repos }}"
+  when:
+    - __repo.gpgkey is defined
+    - __repo.gpgcheck == "1"
+
+- name: Install GPG keys
+  copy:
+    src: "files/{{ __repo.gpgkey | replace('file://','') | basename }}"
+    dest: "{{ __repo.gpgkey | replace('file://','') }}"
+  vars:
+    __repo: "{{ lookup('vars','__'+item.item) }}"
+  loop: "{{ __gpg_file.results }}"
+  loop_control:
+    label: "{{ __repo.gpgkey | d(__repo.name+' skipped') }}"
+  when:
+    - "'gpgkey' in __repo"
+    - __repo.gpgcheck|d("0") == "1"
+    - not (item.skipped|d(False))
+    - not item.stat.exists

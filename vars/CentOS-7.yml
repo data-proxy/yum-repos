@@ -1,0 +1,27 @@
+---
+__centos_epel:
+  file: "epel"
+  name: "epel"
+  description: "Extra Packages for Enterprise Linux 7 - $basearch"
+  metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch&infra=$infra&content=$contentdir"
+  failovermethod: "priority"
+  gpgcheck: "1"
+  gpgkey: "file://{{ yr_rpm_gpg_path }}/RPM-GPG-KEY-EPEL-7"
+
+__centos_epel_debuginfo:
+  file: "epel"
+  name: "debuginfo"
+  description: "Extra Packages for Enterprise Linux 7 - $basearch - Debug"
+  metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-debug-7&arch=$basearch&infra=$infra&content=$contentdir"
+  failovermethod: "priority"
+  gpgkey: "file://{{ yr_rpm_gpg_path }}/RPM-GPG-KEY-EPEL-7"
+  gpgcheck: "1"
+
+__centos_epel_source:
+  file: "epel"
+  name: "epel.source"
+  description: "Extra Packages for Enterprise Linux 7 - $basearch - Source"
+  metalink: "https://mirrors.fedoraproject.org/metalink?repo=epel-source-7&arch=$basearch&infra=$infra&content=$contentdir"
+  failovermethod: "priority"
+  gpgkey: "file://{{ yr_rpm_gpg_path }}/RPM-GPG-KEY-EPEL-7"
+  gpgcheck: "1"
