@@ -1,8 +1,9 @@
 ---
 # defaults file for yum-repos
 
-yr_rpm_gpg_path: "/etc/pki/rpm-gpg/"
-yr_confluent_repo_url: "http://packages.confluent.io/rpm/"
+yr_rpm_gpg_path: "/etc/pki/rpm-gpg"
+yr_confluent_repo_url: "http://packages.confluent.io/rpm"
+yr_confluent_repo_version: "5.4"
 
 __confluent_dist:
   file: "confluent"
