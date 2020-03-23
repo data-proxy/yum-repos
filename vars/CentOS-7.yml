@@ -25,3 +25,11 @@ __centos_epel_source:
   failovermethod: "priority"
   gpgkey: "file://{{ yr_rpm_gpg_path }}/RPM-GPG-KEY-EPEL-7"
   gpgcheck: "1"
+
+__nginx:
+  file: "nginx"
+  name: "nginx"
+  description: "NGINX repo for centos 7"
+  baseurl: "http://nginx.org/packages/mainline/centos/7/$basearch/"
+  gpgcheck: "1"
+  gpgkey: "file://{{ yr_rpm_gpg_path }}/CENTOS"
