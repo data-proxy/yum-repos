@@ -34,6 +34,6 @@ For CentOS7:
                - "confluent_platform"
                - "confluent_dist"
 
-## Author Information
+## License
 
-Michal Medvecky
+See LICENSE file.
