@@ -20,4 +20,3 @@ __confluent_platform:
   baseurl: "{{ yr_confluent_repo_url }}/{{ yr_confluent_repo_version }}"
   gpgcheck: "1"
   gpgkey: "file://{{ yr_rpm_gpg_path }}/CONFLUENT"
-
